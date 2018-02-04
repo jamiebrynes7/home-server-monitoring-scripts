@@ -7,7 +7,7 @@ from ..utils.influxutils import InfluxMetricData, \
 from ..utils.timeutils import goodreads_timestamp_to_utc
 
 class GoodreadsDataSource(DataSourceBase):
-    """The class for Goodreads data source collection.
+    """The class for Goodreads data source.
 
     Args:
         name (str): The name of this data collection instance.
@@ -16,7 +16,7 @@ class GoodreadsDataSource(DataSourceBase):
 
     Attributes:
         name [inherited] (str): The name of this data collection instance.
-        config [inherited] (dict): Data Sources Configuration.
+        config [inherited] (dict): Data source Configuration.
         cached_data (set): List of ISBNs currently stored in Influx.
     """
 
@@ -118,8 +118,5 @@ class GoodreadsDataSource(DataSourceBase):
                 InfluxTimestampData(timestamp, "s")
             )
 
-            upload_metric(
-                self.config["database"],
-                influx_dp
-            )
+            upload_metric(self.config["database"], influx_dp)
             self.cached_data.add(isbn)

@@ -1,7 +1,7 @@
 class DataSourceBase:
     """The abstract base class for a data source.
 
-    Any class which inherits from this class should implement collect() and setup_task(scheduler).
+    Any class which inherits from this class should implement collect() and setup_task.
 
     Args:
         name (str): The name of this data collection instance
@@ -10,7 +10,7 @@ class DataSourceBase:
             
     Attributes:
         name (str): The name of this data collection instance
-        config (dict): Data Sources Configuration
+        config (dict): Data source Configuration
     """
 
     def __init__(self, name, application):
