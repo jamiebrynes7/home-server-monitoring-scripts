@@ -14,9 +14,9 @@ class InfluxTimestampData:
     _ACCEPTED_PRECISIONS = {"ns", "u", "ms", "s", "m", "h"}
     def __init__(self, timestamp, precision):
         self.timestamp = timestamp
-        if (precision not in self._ACCEPTED_PRECISIONS):
+        if precision not in self._ACCEPTED_PRECISIONS:
             raise ValueError("Precision {0} not found in acceptable list."
-            .format(precision))
+                .format(precision))
         self.precision = precision
 
 class InfluxMetricData:
