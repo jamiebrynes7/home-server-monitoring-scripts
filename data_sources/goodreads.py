@@ -2,21 +2,22 @@ import requests
 import xmltodict
 
 from .data_source_base import DataSourceBase
-from ..utils.influx import retrieve_metrics, upload_metrics
+from ..utils.influxutils import InfluxMetricData, \
+    InfluxTimestampData, upload_metric, retrieve_metrics 
 from ..utils.timeutils import goodreads_timestamp_to_utc
 
 class GoodreadsDataSource(DataSourceBase):
     """The class for Goodreads data source collection.
 
     Args:
-        name (str): The name of this data collection instance
+        name (str): The name of this data collection instance.
         application (DataCollectionApplication): The application instance that owns 
         this data source.
 
     Attributes:
-        name [inherited] (str): The name of this data collection instance
-        config [inherited] (dict): Data Sources Configuration
-        cached_data (set): List of ISBNs currently stored in Influx
+        name [inherited] (str): The name of this data collection instance.
+        config [inherited] (dict): Data Sources Configuration.
+        cached_data (set): List of ISBNs currently stored in Influx.
     """
 
     _API_URL = "https://www.goodreads.com/review/list?v=2"
@@ -84,8 +85,8 @@ class GoodreadsDataSource(DataSourceBase):
     def diff_data(self, new_goodreads_data):
         """Compares the cached data against the newly retrieved data.
         
-        Note that since the web request returns an ordered list of books in
-        date read, once we hit the first book that we've already recorded, we can stop.
+        Note that since the web request returns an ordered list of books sorted
+        by date read, once we hit the first book that we've already recorded, we can stop.
 
         Args:
             new_goodreads_data (OrderedDict): Contains a set of books in JSON format.
@@ -110,11 +111,15 @@ class GoodreadsDataSource(DataSourceBase):
         for entry in new_entries:
             timestamp = goodreads_timestamp_to_utc(entry["read_at"])
             isbn = entry["book"]["isbn"]
-            upload_metrics(
-                self.config["database"],
+            influx_dp = InfluxMetricData(
                 self.config["table"],
                 {"source": self.config["source_filter"]},
                 {"isbn": isbn},
-                {"timestamp": timestamp, "precision": "s"}
+                InfluxTimestampData(timestamp, "s")
+            )
+
+            upload_metric(
+                self.config["database"],
+                influx_dp
             )
             self.cached_data.add(isbn)
