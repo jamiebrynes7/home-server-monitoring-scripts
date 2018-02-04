@@ -18,16 +18,14 @@ class DataSourceBase:
         self.config = application.get_config(self.name)
 
     def collect(self):
-        """
-        Function for collection of the underlying data.
+        """Function for collection of the underlying data.
         Should be implemented by the child class.
         """
         raise NotImplementedError(
             "Child class of DataSourceBase should have implemented collect().")
 
     def setup_task(self, scheduler):
-        """
-        Function for setting up a reoccuring task for this data source.
+        """Function for setting up a reoccuring task for this data source.
         Should be implemented by the child class.
         """
         raise NotImplementedError(
