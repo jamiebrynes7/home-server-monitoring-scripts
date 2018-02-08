@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/jamiebrynes7/home-server-monitoring-scripts.svg?branch=master)](https://travis-ci.org/jamiebrynes7/home-server-monitoring-scripts)
+
 # Home Server Monitoring
 
 This is my collection of scripts with scheduler for monitoring my home server and areas of my life. These all feed into an InfluxDB instance which is queried by Grafana to visualise the data.
