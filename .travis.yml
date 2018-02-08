@@ -4,5 +4,5 @@ python:
 install:
  - pip install -r requirements.txt
 script:
-  - pylint ./data_collection.py ./data_sources/* ./utils/*
-  - python -m py_compile data_collection.py
+  - sh ./scripts/lint.sh
+  - sh ./scripts/build.sh
