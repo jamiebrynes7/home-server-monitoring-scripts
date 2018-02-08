@@ -15,8 +15,7 @@ class InfluxTimestampData:
     def __init__(self, timestamp, precision):
         self.timestamp = timestamp
         if precision not in self._ACCEPTED_PRECISIONS:
-            raise ValueError("Precision {0} not found in acceptable list."
-                .format(precision))
+            raise ValueError("Precision {0} not found in acceptable list.".format(precision))
         self.precision = precision
 
 class InfluxMetricData:
@@ -41,11 +40,10 @@ class InfluxMetricData:
         self.timestamp = timestamp
     
     def __str__(self):
-        rtn_str = (str(self.metric) 
-            + ",".join((str(key) + "=" + str(value)) for key, value in self.tags.items()) 
-            + " " 
-            + ",".join((str(key) + "=" + str(value)) for key, value in self.data.items()) 
-            + (" " + str(self.timestamp.timestamp) if self.timestamp else ""))
+        rtn_str = (str(self.metric) + 
+            ",".join((str(key) + "=" + str(value)) for key, value in self.tags.items()) + 
+            " " + ",".join((str(key) + "=" + str(value)) for key, value in self.data.items()) + 
+            (" " + str(self.timestamp.timestamp) if self.timestamp else ""))
         return rtn_str
 
 
